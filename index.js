@@ -1,40 +1,16 @@
-const strandSort = (arr) => {
-  const extract = (arr, x) => {
-    const extracted = [];
-    let i = 0;
-    while (i < arr.length) {
-      if (x.includes(arr[i])) {
-        extracted.push(arr.splice(i, 1)[0]);
-      } else {
-        i++;
-      }
-    }
-    return extracted;
-  };
-  const merge = (a, b) => {
-    const merged = [];
-    let i = 0;
-    let j = 0;
-    while (i < a.length && j < b.length) {
-      if (a[i] < b[j]) {
-        merged.push(a[i]);
-        i++;
-      } else {
-        merged.push(b[j]);
-        j++;
-      }
-    }
-    return merged.concat(i < a.length ? a.slice(i) : b.slice(j));
-  };
-  let sorted = [];
-  while (arr.length > 0) {
-    let sublist = [arr.shift()];
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] > sublist[sublist.length - 1]) {
-        sublist.push(arr.splice(i, 1)[0]);
-      }
-    }
-    sorted = merge(sorted, sublist);
+function reverseBetween(head, m, n) {
+  if (!head || m === n) return head;
+  const dummy = new ListNode(0);
+  dummy.next = head;
+  let prev = dummy;
+  for (let i = 0; i < m - 1; i++) prev = prev.next;
+  let start = prev.next;
+  let then = start.next;
+  for (let i = 0; i < n - m; i++) {
+    start.next = then.next;
+    then.next = prev.next;
+    prev.next = then;
+    then = start.next;
   }
-  return sorted;
-};
+  return dummy.next;
+}
